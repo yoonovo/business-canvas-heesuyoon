@@ -1,11 +1,22 @@
 import React from "react";
-import { Table, Checkbox, Button, Flex, Typography } from "antd";
-import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Flex, Typography } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import CommonTable from "../components/common/Table";
+
+type DataType = {
+  key: string;
+  name: string;
+  address: string;
+  memo: string;
+  registDate: string;
+  job: string;
+  isAgreeEmail: boolean;
+};
 
 const { Text } = Typography;
 
 const RecordList: React.FC = () => {
-  const dataSource = [
+  const recordList: DataType[] = [
     {
       key: "1",
       name: "John Doe",
@@ -25,48 +36,44 @@ const RecordList: React.FC = () => {
       isAgreeEmail: false,
     },
   ];
+
   const columns = [
     {
       title: "이름",
       dataIndex: "name",
-      key: "name",
-      onFilter: (value, record) => record.name.includes(value),
-      filters: [
-        {
-          text: "John Doe",
-          value: "John Doe",
-        },
-        {
-          text: "Foo Bar",
-          value: "Foo Bar",
-        },
-      ],
+      isFilter: true,
+      filterMatchType: "partial",
     },
     {
       title: "주소",
       dataIndex: "address",
-      key: "address",
+      isFilter: true,
+      filterMatchType: "partial",
     },
     {
       title: "메모",
       dataIndex: "memo",
-      key: "memo",
+      isFilter: true,
+      filterMatchType: "partial",
     },
     {
       title: "가입일",
       dataIndex: "registDate",
-      key: "registDate",
+      isFilter: true,
+      filterMatchType: "partial",
     },
     {
       title: "직업",
       dataIndex: "job",
-      key: "job",
+      isFilter: true,
+      filterMatchType: "partial",
     },
     {
       title: "이메일 수신 동의",
       dataIndex: "isAgreeEmail",
-      key: "isAgreeEmail",
-      filters: [
+      isFilter: true,
+      filterMatchType: "exact",
+      filterList: [
         {
           text: "선택됨",
           value: true,
@@ -76,18 +83,15 @@ const RecordList: React.FC = () => {
           value: false,
         },
       ],
-      onFilter: (value, record) => record.isAgreeEmail === value,
-      render: (value) => <Checkbox checked={value} />,
+      render: (value: boolean) => <Checkbox checked={value} />,
     },
-    {
-      title: "",
-      dataIndex: "edit",
-      key: "edit",
-      width: "5%",
-      render: () => (
-        <Button color="default" variant="text" icon={<MoreOutlined />}></Button>
-      ),
-    },
+    //   {
+    //     title: "",
+    //     dataIndex: "edit",
+    //     render: () => (
+    //       <Button color="default" variant="text" icon={<MoreOutlined />} />
+    //     ),
+    //   },
   ];
 
   return (
@@ -102,11 +106,7 @@ const RecordList: React.FC = () => {
           추가
         </Button>
       </Flex>
-      <Table
-        rowSelection={{ type: "checkbox" }}
-        dataSource={dataSource}
-        columns={columns}
-      />
+      <CommonTable<DataType> dataSource={recordList} columns={columns} />
     </div>
   );
 };

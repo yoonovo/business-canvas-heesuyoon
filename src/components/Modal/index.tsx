@@ -1,8 +1,13 @@
 import { Modal } from "antd";
-import RecordForm from "../RecordForm";
 import { ModalProps } from "antd";
 
-function CommonModal({ open, onOk, onCancel, ...restProp }: ModalProps) {
+function CommonModal({
+  open,
+  onOk,
+  onCancel,
+  children,
+  ...restProp
+}: ModalProps) {
   return (
     <Modal
       open={true} //isModalOpen}
@@ -12,7 +17,7 @@ function CommonModal({ open, onOk, onCancel, ...restProp }: ModalProps) {
       cancelText="취소"
       {...restProp}
     >
-      <RecordForm />
+      {children}
     </Modal>
   );
 }

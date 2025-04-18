@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Button, Flex, Typography, Modal, Divider, Form, Input } from "antd";
+import { Button, Flex, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import CommonTable from "../components/Table";
 import { recordColumns } from "../constants/recordColumns";
 import type { RecordType } from "../types/record";
 import CommonModal from "../components/Modal";
+import RecordForm from "../components/Form";
 
 const { Text } = Typography;
 
@@ -30,20 +31,8 @@ const RecordList: React.FC = () => {
     },
   ];
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [form] = Form.useForm();
 
-  const addRecord = () => {
-    // Modal.confirm({
-    //   title: "회원 정보 추가",
-    //   content: (
-    //     <div>
-    //       <p>some messages...some messages...</p>
-    //       <p>some messages...some messages...</p>
-    //     </div>
-    //   ),
-    //   onOk() {},
-    // });
-  };
+  const addRecord = () => {};
 
   const editRecord = (v: RecordType) => {
     console.log("editRecord", v);
@@ -86,6 +75,7 @@ const RecordList: React.FC = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        children={<RecordForm />}
       />
     </div>
   );

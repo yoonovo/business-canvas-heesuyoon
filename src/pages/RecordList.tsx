@@ -1,23 +1,14 @@
 import React from "react";
-import { Button, Checkbox, Flex, Typography } from "antd";
+import { Button, Flex, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import CommonTable from "../components/common/Table";
-import { CommonColumnType } from "../types/column";
-
-type DataType = {
-  key: string;
-  name: string;
-  address: string;
-  memo: string;
-  registDate: string;
-  job: string;
-  isAgreeEmail: boolean;
-};
+import { recordColumns } from "../constants/recordColumns";
+import type { RecordType } from "../types/record";
 
 const { Text } = Typography;
 
 const RecordList: React.FC = () => {
-  const recordList: DataType[] = [
+  const recordList: RecordType[] = [
     {
       key: "1",
       name: "John Doe",
@@ -38,63 +29,6 @@ const RecordList: React.FC = () => {
     },
   ];
 
-  const columns: CommonColumnType<DataType>[] = [
-    {
-      title: "이름",
-      dataIndex: "name",
-      isFilter: true,
-      filterMatchType: "partial",
-    },
-    {
-      title: "주소",
-      dataIndex: "address",
-      isFilter: true,
-      filterMatchType: "partial",
-    },
-    {
-      title: "메모",
-      dataIndex: "memo",
-      isFilter: true,
-      filterMatchType: "partial",
-    },
-    {
-      title: "가입일",
-      dataIndex: "registDate",
-      isFilter: true,
-      filterMatchType: "partial",
-    },
-    {
-      title: "직업",
-      dataIndex: "job",
-      isFilter: true,
-      filterMatchType: "partial",
-    },
-    {
-      title: "이메일 수신 동의",
-      dataIndex: "isAgreeEmail",
-      isFilter: true,
-      filterMatchType: "exact",
-      filterList: [
-        {
-          text: "선택됨",
-          value: true,
-        },
-        {
-          text: "선택 안함",
-          value: false,
-        },
-      ],
-      render: (value: boolean) => <Checkbox checked={value} />,
-    },
-    //   {
-    //     title: "",
-    //     dataIndex: "edit",
-    //     render: () => (
-    //       <Button color="default" variant="text" icon={<MoreOutlined />} />
-    //     ),
-    //   },
-  ];
-
   return (
     <div>
       <Flex
@@ -107,10 +41,10 @@ const RecordList: React.FC = () => {
           추가
         </Button>
       </Flex>
-      <CommonTable<DataType>
+      <CommonTable<RecordType>
         rowSelection={{ type: "checkbox" }}
         dataSource={recordList}
-        columns={columns}
+        columns={recordColumns}
       />
     </div>
   );

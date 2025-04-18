@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Checkbox, Flex, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import CommonTable from "../components/common/Table";
+import { CommonColumnType } from "../types/column";
 
 type DataType = {
   key: string;
@@ -37,7 +38,7 @@ const RecordList: React.FC = () => {
     },
   ];
 
-  const columns = [
+  const columns: CommonColumnType<DataType>[] = [
     {
       title: "이름",
       dataIndex: "name",
@@ -106,7 +107,11 @@ const RecordList: React.FC = () => {
           추가
         </Button>
       </Flex>
-      <CommonTable<DataType> dataSource={recordList} columns={columns} />
+      <CommonTable<DataType>
+        rowSelection={{ type: "checkbox" }}
+        dataSource={recordList}
+        columns={columns}
+      />
     </div>
   );
 };

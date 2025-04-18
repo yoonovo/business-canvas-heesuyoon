@@ -1,41 +1,52 @@
 import type { ColumnType as AntdColumnType } from "antd/es/table";
-// import { ReactNode } from "react";
+import type { ColumnFilterItem } from "antd/es/table/interface";
+import { CommonColumnType } from "../types/column";
+import { Key } from "react";
 
-type ColumnType<T> = {
-  title: string;
-  dataIndex: string;
-  isFilter?: boolean;
-  filterMatchType?: "exact" | "partial";
-  filterList?: { text: string; value: T[keyof T] }[];
-  render?: (value: T[keyof T], record: T) => ReactNode;
-};
+type valueType = Key | boolean;
 
-export function createColumns<C extends Record<string, any>, T>(
-  columns: ColumnType<T>[],
+export function createColumns<T extends AntdColumnType>(
+  columns: CommonColumnType<T>[],
   dataSource: T[]
 ): AntdColumnType<T>[] {
   return columns.map(
-    ({ title, dataIndex, isFilter, filterMatchType, filterList, render }) => {
-      const filters = isFilter
-        ? filterList
-          ? filterList
-          : [...new Set(dataSource.map((item) => item[dataIndex]))].map(
-              (value) => ({ text: value, value })
-            )
+    ({ dataIndex, isFilter, filterMatchType, filterList, ...restProp }) => {
+      // 필터 목록 추출
+      const filters: ColumnFilterItem[] = isFilter
+        ? filterList ??
+          [...new Set(dataSource.map((data) => data[dataIndex]))].reduce(
+            (tot: ColumnFilterItem[], v) => {
+              tot.push({
+                text: String(v),
+                value: v as valueType,
+              });
+              return tot;
+            },
+            []
+          )
         : [];
 
+      // 필터링 형식에 따라 동작
+      const onFilter = (v: valueType, record: T) => {
+        const fieldValue = String(record[dataIndex]);
+
+        switch (filterMatchType) {
+          case "exact": // 완전 일치
+            return record[dataIndex] === v;
+          case "partial": // 부분 일치
+          default:
+            return fieldValue.includes(String(v));
+        }
+      };
+
       return {
-        title,
-        dataIndex,
-        key: dataIndex,
-        render,
+        key: dataIndex as Key,
+        dataIndex: String(dataIndex),
         ...(isFilter && {
-          filters: filters,
-          onFilter: (value: boolean | React.Key, record: T) =>
-            filterMatchType === "exact"
-              ? record[dataIndex] === value
-              : String(record[dataIndex]).includes(String(value)),
+          filters,
+          onFilter,
         }),
+        ...restProp,
       };
     }
   );

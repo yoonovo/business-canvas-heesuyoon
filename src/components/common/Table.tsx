@@ -1,28 +1,21 @@
-import { ReactNode } from "react";
 import { Table } from "antd";
+import type { TableProps } from "antd";
 import { createColumns } from "../../utils/createColumn";
+import type { CommonColumnType } from "../../types/column";
 
-type ColumnType<T> = {
-  title: string;
-  dataIndex: string;
-  isFilter?: boolean;
-  filterMatchType?: "exact" | "partial";
-  filterList?: { text: string; value: T[keyof T] }[];
-  render?: (value: T[keyof T], record: T) => ReactNode;
-};
-
-function CommonTable<T>({
+function CommonTable<T extends Record<string, React.Key | boolean>>({
   columns,
   dataSource,
-}: {
-  columns: ColumnType<T>;
+  ...restProps
+}: TableProps<T> & {
+  columns: CommonColumnType<T>[];
   dataSource: T[];
 }) {
   return (
-    <Table
-      rowSelection={{ type: "checkbox" }}
+    <Table<T>
       dataSource={dataSource}
       columns={createColumns(columns, dataSource)}
+      {...restProps}
     />
   );
 }

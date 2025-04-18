@@ -1,8 +1,8 @@
-import { Form as AntdForm, Button, Modal } from "antd";
-import { ModalProps } from "antd";
-import { FormFieldsType } from "../../types/form";
-import Form from "../Form";
 import { useState } from "react";
+import { Form as AntdForm, Button, Modal, ModalProps } from "antd";
+
+import { Form } from "@/components";
+import { FormFieldsType } from "@/types/form";
 
 function FormModal<T>({
   fields,

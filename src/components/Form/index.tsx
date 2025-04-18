@@ -1,8 +1,9 @@
-import { Form as AntdForm, FormInstance } from "antd";
 import { useEffect } from "react";
+import { Form as AntdForm, FormInstance } from "antd";
 import dayjs from "dayjs";
-import FormItem from "./FormItem";
-import { FormFieldsType } from "../../types/form";
+
+import { FormItem } from "@/components";
+import { FormFieldsType } from "@/types/form";
 
 function Form<T>({
   form,

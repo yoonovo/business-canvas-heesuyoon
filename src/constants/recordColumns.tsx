@@ -1,6 +1,6 @@
 import { Checkbox } from "antd";
-import type { CommonColumnType } from "../types/column";
-import type { RecordType } from "../types/record";
+import type { CommonColumnType } from "@/types/column";
+import type { RecordType } from "@/types/record";
 
 export const recordColumns: CommonColumnType<RecordType>[] = [
   {

@@ -1,6 +1,6 @@
 import type { ColumnType as AntdColumnType } from "antd/es/table";
 import type { ColumnFilterItem } from "antd/es/table/interface";
-import { CommonColumnType } from "../types/column";
+import { CommonColumnType } from "@/types/column";
 import { Key } from "react";
 
 type valueType = Key | boolean;

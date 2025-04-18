@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import { Button, Flex, Typography, Modal, ModalProps } from "antd";
 import { DeleteTwoTone, PlusOutlined } from "@ant-design/icons";
-import { CommonTable, FormModal } from "../components";
 
-import { recordColumns } from "../constants/recordColumns";
-import { formFields } from "../constants/recordFormFields";
-import type { RecordType } from "../types/record";
+import { CommonTable, FormModal } from "@/components";
+import { recordColumns } from "@/constants/recordColumns";
+import { formFields } from "@/constants/recordFormFields";
+import type { RecordType } from "@/types/record";
 
 const { Text } = Typography;
 const initRecord = {

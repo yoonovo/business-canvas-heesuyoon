@@ -1,4 +1,4 @@
-import { FormFieldsType } from "../types/form";
+import { FormFieldsType } from "@/types/form";
 
 export const formFields: FormFieldsType[] = [
   { id: "name", type: "text", label: "이름", required: true },

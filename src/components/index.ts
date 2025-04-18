@@ -1,6 +1,7 @@
-import CommonTable from "./Table";
-import Form from "./Form";
-import FormModal from "./FormModal";
-import DropdownMenuBtn from "./DropdownMenuBtn";
+import CommonTable from "@/components/Table";
+import Form from "@/components/Form";
+import FormItem from "@/components/Form/FormItem";
+import FormModal from "@/components/FormModal";
+import DropdownMenuBtn from "@/components/DropdownMenuBtn";
 
-export { CommonTable, Form, FormModal, DropdownMenuBtn };
+export { CommonTable, Form, FormItem, FormModal, DropdownMenuBtn };

@@ -1,6 +1,7 @@
 import { Form, Input, DatePicker, Select, Checkbox } from "antd";
-import { selectOpts } from "../../constants/recordFormFields";
-import { FormFieldsType } from "../../types/form";
+
+import { selectOpts } from "@/constants/recordFormFields";
+import { FormFieldsType } from "@/types/form";
 
 function FormItem({ field }: { field: FormFieldsType }) {
   const { id, type, label, required } = field;

@@ -1,5 +1,5 @@
 export type RecordType = {
-  key?: string;
+  key?: number | string;
   name: string;
   address: string;
   memo: string;

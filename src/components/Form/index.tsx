@@ -1,11 +1,10 @@
 import { Form as AntdForm, FormInstance } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import dayjs from "dayjs";
 import FormItem from "./FormItem";
 import { FormFieldsType } from "../../types/form";
-import { CommonRecordType } from "../../types/common";
 
-function Form({
+function Form<T>({
   form,
   fields,
   fieldsData,
@@ -14,11 +13,13 @@ function Form({
 }: {
   form: FormInstance;
   fields: FormFieldsType[];
-  fieldsData: CommonRecordType;
+  fieldsData: T;
   setIsDisabled: (v: boolean) => void;
 }) {
+  // Date 타입 필드 값을 Dayjs로 변환
   useEffect(() => {
-    const dateFieldId = fields.filter(({ type }) => type === "date")?.[0].id;
+    const dateFieldId = fields.filter(({ type }) => type === "date")?.[0]
+      .id as keyof T;
     const data = {
       ...fieldsData,
       [dateFieldId]: dayjs(String(fieldsData[dateFieldId])),

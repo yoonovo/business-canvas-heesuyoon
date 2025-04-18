@@ -1,23 +1,32 @@
 import React, { useState } from "react";
-import { Button, Flex, Typography, ModalProps } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
+import { Button, Flex, Typography, Modal, ModalProps } from "antd";
+import { DeleteTwoTone, PlusOutlined } from "@ant-design/icons";
 import CommonTable from "../components/Table";
-import { recordColumns } from "../constants/recordColumns";
-import type { RecordType } from "../types/record";
 import FormModal from "../components/FormModal";
-import { formFields, initRecord } from "../constants/recordFormFields";
-import { CommonRecordType } from "../types/common";
+
+import { recordColumns } from "../constants/recordColumns";
+import { formFields } from "../constants/recordFormFields";
+import type { RecordType } from "../types/record";
 
 const { Text } = Typography;
+const initRecord = {
+  name: "",
+  address: "",
+  memo: "",
+  registDate: dayjs(new Date()).format("YYYY-MM-DD"),
+  job: "개발자",
+  isAgreeEmail: false,
+};
 
 const RecordList: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalOpts, setModalOpts] = useState<
-    ModalProps & { onSubmit: (v: CommonRecordType) => void }
+    ModalProps & { onSubmit: (v: RecordType) => void }
   >();
   const [records, setRecords] = useState<RecordType[]>([
     {
-      key: "1",
+      key: 1,
       name: "John Doe",
       address: "서울 강남구",
       memo: "외국인",
@@ -26,7 +35,7 @@ const RecordList: React.FC = () => {
       isAgreeEmail: true,
     },
     {
-      key: "2",
+      key: 2,
       name: "Foo Bar",
       address: "서울 서초구",
       memo: "한국인",
@@ -39,17 +48,23 @@ const RecordList: React.FC = () => {
 
   // Modal 닫기 & 데이터 초기화
   const handleReset = () => {
-    console.log("reset");
-    setRecordItem(initRecord);
+    setRecordItem({ ...initRecord });
     setIsModalOpen(false);
   };
 
   // 회원 추가
-  const addRecord = () => {
+  const addRecord = async () => {
     setModalOpts({
       title: "회원 추가",
       onSubmit: (v) => {
-        console.log("add", v);
+        setRecords((prev) => [
+          ...prev,
+          {
+            ...v,
+            key: records.length + 1,
+            registDate: dayjs(v.registDate).format("YYYY-MM-DD"),
+          },
+        ]);
         handleReset();
       },
     });
@@ -58,12 +73,11 @@ const RecordList: React.FC = () => {
 
   // 회원 수정
   const editRecord = (v: RecordType) => {
-    console.log("editRecord", v);
     setRecordItem(v);
     setModalOpts({
       title: "회원 수정",
-      onSubmit: () => {
-        console.log("edit");
+      onSubmit: (v) => {
+        setRecords((prev) => prev.map((val) => (val.key == v.key ? v : val)));
         handleReset();
       },
     });
@@ -72,7 +86,14 @@ const RecordList: React.FC = () => {
 
   // 회원 삭제
   const deleteRecord = (v: RecordType) => {
-    console.log("deleteRecord", v);
+    Modal.confirm({
+      title: "회원 삭제",
+      icon: <DeleteTwoTone />,
+      content: `[${v.name}]님의 회원 정보를 삭제하시겠습니까?`,
+      okText: "삭제",
+      cancelText: "취소",
+      onOk: () => setRecords((prev) => prev.filter(({ key }) => v.key !== key)),
+    });
   };
 
   return (
@@ -97,7 +118,7 @@ const RecordList: React.FC = () => {
         onDelete={deleteRecord}
       />
       {/* Record Modal */}
-      <FormModal
+      <FormModal<RecordType>
         open={isModalOpen}
         onCancel={handleReset}
         fields={formFields}

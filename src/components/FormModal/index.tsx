@@ -2,10 +2,9 @@ import { Form as AntdForm, Button, Modal } from "antd";
 import { ModalProps } from "antd";
 import { FormFieldsType } from "../../types/form";
 import Form from "../Form";
-import { CommonRecordType } from "../../types/common";
 import { useState } from "react";
 
-function FormModal({
+function FormModal<T>({
   fields,
   fieldsData,
   onCancel,
@@ -13,16 +12,12 @@ function FormModal({
   ...restProp
 }: ModalProps & {
   fields: FormFieldsType[];
-  fieldsData: CommonRecordType;
-  onSubmit: (v: CommonRecordType) => void;
+  fieldsData: T;
+  onSubmit: (v: T) => void;
 }) {
   const [form] = AntdForm.useForm();
   const values = AntdForm.useWatch([], form);
   const [isDisabled, setIsDisabled] = useState(false);
-
-  const handleOk = () => {
-    onSubmit(values);
-  };
 
   return (
     <Modal
@@ -30,7 +25,11 @@ function FormModal({
       footer={
         <>
           <Button onClick={onCancel}>취소</Button>
-          <Button type="primary" disabled={!isDisabled} onClick={handleOk}>
+          <Button
+            type="primary"
+            disabled={!isDisabled}
+            onClick={() => onSubmit({ ...fieldsData, ...values })}
+          >
             저장
           </Button>
         </>

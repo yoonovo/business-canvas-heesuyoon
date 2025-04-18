@@ -5,11 +5,20 @@ import CommonTable from "../components/Table";
 import { recordColumns } from "../constants/recordColumns";
 import type { RecordType } from "../types/record";
 import CommonModal from "../components/Modal";
-import RecordForm from "../components/Form";
+import Form from "../components/Form";
+import { formFields } from "../constants/recordFormFields";
 
 const { Text } = Typography;
 
 const RecordList: React.FC = () => {
+  const initRecord = {
+    name: "",
+    address: "",
+    memo: "",
+    registDate: "",
+    job: "개발자",
+    isAgreeEmail: false,
+  };
   const recordList: RecordType[] = [
     {
       key: "1",
@@ -30,12 +39,15 @@ const RecordList: React.FC = () => {
       isAgreeEmail: false,
     },
   ];
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [recordData, setRecordData] = useState<RecordType>(initRecord);
 
   const addRecord = () => {};
 
   const editRecord = (v: RecordType) => {
     console.log("editRecord", v);
+    setRecordData(v);
+    setIsModalOpen(true);
   };
 
   const deleteRecord = (v: RecordType) => {
@@ -44,10 +56,12 @@ const RecordList: React.FC = () => {
 
   const handleOk = () => {
     setIsModalOpen(false);
+    setRecordData(initRecord);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setRecordData(initRecord);
   };
 
   return (
@@ -58,10 +72,15 @@ const RecordList: React.FC = () => {
         style={{ height: 50, padding: "8px 14px" }}
       >
         <Text style={{ fontSize: "16px", fontWeight: 600 }}>회원 목록</Text>
-        <Button type="primary" icon={<PlusOutlined />} onClick={addRecord}>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => setIsModalOpen(true)}
+        >
           추가
         </Button>
       </Flex>
+      {/* Record Table */}
       <CommonTable<RecordType>
         rowSelection={{ type: "checkbox" }}
         dataSource={recordList}
@@ -70,12 +89,13 @@ const RecordList: React.FC = () => {
         onEdit={editRecord}
         onDelete={deleteRecord}
       />
+      {/* Record Modal */}
       <CommonModal
         title="회원 추가"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        children={<RecordForm />}
+        children={<Form<RecordType> fields={formFields} data={recordData} />}
       />
     </div>
   );

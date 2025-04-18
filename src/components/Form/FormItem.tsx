@@ -8,14 +8,18 @@ function FormItem({ field }: { field: FormFieldsType }) {
   const commonProps = {
     name: id,
     label,
-    required,
   };
 
   switch (type) {
     case "text":
       return (
         <Form.Item
-          rules={[{ max: 20, message: "글자수 20을 초과할 수 없습니다." }]}
+          rules={[
+            { max: 20, message: "글자수 20을 초과할 수 없습니다." },
+            required
+              ? { required: true, message: `${field.label}은 필수입니다.` }
+              : {},
+          ]}
           {...commonProps}
         >
           <Input placeholder="Input" />
@@ -24,7 +28,12 @@ function FormItem({ field }: { field: FormFieldsType }) {
     case "textarea":
       return (
         <Form.Item
-          rules={[{ max: 50, message: "글자수 50을 초과할 수 없습니다." }]}
+          rules={[
+            { max: 50, message: "글자수 50을 초과할 수 없습니다." },
+            required
+              ? { required: true, message: `${field.label}은 필수입니다.` }
+              : {},
+          ]}
           {...commonProps}
         >
           <Input.TextArea placeholder="TextArea" />
@@ -32,19 +41,41 @@ function FormItem({ field }: { field: FormFieldsType }) {
       );
     case "date":
       return (
-        <Form.Item {...commonProps}>
+        <Form.Item
+          rules={
+            required
+              ? [{ required: true, message: `${field.label}은 필수입니다.` }]
+              : []
+          }
+          {...commonProps}
+        >
           <DatePicker />
         </Form.Item>
       );
     case "select":
       return (
-        <Form.Item {...commonProps}>
+        <Form.Item
+          rules={
+            required
+              ? [{ required: true, message: `${field.label}은 필수입니다.` }]
+              : []
+          }
+          {...commonProps}
+        >
           <Select options={selectOpts} style={{ width: 120 }} />
         </Form.Item>
       );
     case "checkbox":
       return (
-        <Form.Item valuePropName="checked" {...commonProps}>
+        <Form.Item
+          rules={
+            required
+              ? [{ required: true, message: `${field.label}은 필수입니다.` }]
+              : []
+          }
+          valuePropName="checked"
+          {...commonProps}
+        >
           <Checkbox />
         </Form.Item>
       );

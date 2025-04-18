@@ -1,25 +1,21 @@
 import React, { useState } from "react";
-import { Button, Flex, Typography } from "antd";
+import { Button, Flex, Typography, ModalProps } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import CommonTable from "../components/Table";
 import { recordColumns } from "../constants/recordColumns";
 import type { RecordType } from "../types/record";
-import CommonModal from "../components/Modal";
-import Form from "../components/Form";
-import { formFields } from "../constants/recordFormFields";
+import FormModal from "../components/FormModal";
+import { formFields, initRecord } from "../constants/recordFormFields";
+import { CommonRecordType } from "../types/common";
 
 const { Text } = Typography;
 
 const RecordList: React.FC = () => {
-  const initRecord = {
-    name: "",
-    address: "",
-    memo: "",
-    registDate: "",
-    job: "개발자",
-    isAgreeEmail: false,
-  };
-  const recordList: RecordType[] = [
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalOpts, setModalOpts] = useState<
+    ModalProps & { onSubmit: (v: CommonRecordType) => void }
+  >();
+  const [records, setRecords] = useState<RecordType[]>([
     {
       key: "1",
       name: "John Doe",
@@ -38,30 +34,45 @@ const RecordList: React.FC = () => {
       job: "PO",
       isAgreeEmail: false,
     },
-  ];
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [recordData, setRecordData] = useState<RecordType>(initRecord);
+  ]);
+  const [recordItem, setRecordItem] = useState<RecordType>(initRecord);
 
-  const addRecord = () => {};
+  // Modal 닫기 & 데이터 초기화
+  const handleReset = () => {
+    console.log("reset");
+    setRecordItem(initRecord);
+    setIsModalOpen(false);
+  };
 
-  const editRecord = (v: RecordType) => {
-    console.log("editRecord", v);
-    setRecordData(v);
+  // 회원 추가
+  const addRecord = () => {
+    setModalOpts({
+      title: "회원 추가",
+      onSubmit: (v) => {
+        console.log("add", v);
+        handleReset();
+      },
+    });
     setIsModalOpen(true);
   };
 
+  // 회원 수정
+  const editRecord = (v: RecordType) => {
+    console.log("editRecord", v);
+    setRecordItem(v);
+    setModalOpts({
+      title: "회원 수정",
+      onSubmit: () => {
+        console.log("edit");
+        handleReset();
+      },
+    });
+    setIsModalOpen(true);
+  };
+
+  // 회원 삭제
   const deleteRecord = (v: RecordType) => {
     console.log("deleteRecord", v);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-    setRecordData(initRecord);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    setRecordData(initRecord);
   };
 
   return (
@@ -72,30 +83,27 @@ const RecordList: React.FC = () => {
         style={{ height: 50, padding: "8px 14px" }}
       >
         <Text style={{ fontSize: "16px", fontWeight: 600 }}>회원 목록</Text>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={() => setIsModalOpen(true)}
-        >
+        <Button type="primary" icon={<PlusOutlined />} onClick={addRecord}>
           추가
         </Button>
       </Flex>
       {/* Record Table */}
       <CommonTable<RecordType>
         rowSelection={{ type: "checkbox" }}
-        dataSource={recordList}
+        dataSource={records}
         columns={recordColumns}
         isButtons={true}
         onEdit={editRecord}
         onDelete={deleteRecord}
       />
       {/* Record Modal */}
-      <CommonModal
-        title="회원 추가"
+      <FormModal
         open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        children={<Form<RecordType> fields={formFields} data={recordData} />}
+        onCancel={handleReset}
+        fields={formFields}
+        fieldsData={recordItem}
+        onSubmit={modalOpts?.onSubmit ?? (() => {})}
+        {...modalOpts}
       />
     </div>
   );

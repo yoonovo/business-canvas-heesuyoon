@@ -1,4 +1,14 @@
+import dayjs from "dayjs";
 import { FormFieldsType } from "../types/form";
+
+export const initRecord = {
+  name: "",
+  address: "",
+  memo: "",
+  registDate: dayjs(new Date()).format("YYYY-MM-DD"),
+  job: "개발자",
+  isAgreeEmail: false,
+};
 
 export const formFields: FormFieldsType[] = [
   { id: "name", type: "text", label: "이름", required: true },

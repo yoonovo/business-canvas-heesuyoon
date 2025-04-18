@@ -48,6 +48,6 @@ export const recordColumns: CommonColumnType<RecordType>[] = [
         value: false,
       },
     ],
-    render: (value: boolean) => <Checkbox checked={value} />,
+    render: (v: boolean) => <Checkbox checked={v} />,
   },
 ];

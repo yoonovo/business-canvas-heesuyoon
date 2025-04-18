@@ -5,6 +5,7 @@ import type { CommonColumnType } from "../types/column";
 import type { MenuProps } from "antd";
 import DropdownMenuBtn from "./DropdownMenuBtn";
 import { Key } from "react";
+import { RecordType } from "../types/record";
 
 type CommonTablePropsType<T> = TableProps<T> & {
   columns: CommonColumnType<T>[];
@@ -15,7 +16,7 @@ type CommonTablePropsType<T> = TableProps<T> & {
   onDelete: (v: T) => void;
 };
 
-function CommonTable<T extends Record<string, React.Key | boolean>>({
+function CommonTable<T extends RecordType>({
   columns,
   dataSource,
   isButtons,

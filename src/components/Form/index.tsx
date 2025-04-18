@@ -33,7 +33,7 @@ function Form<T>({
   useEffect(() => {
     const timer = setTimeout(() => {
       form
-        .validateFields()
+        .validateFields({ validateOnly: true })
         .then(() => setIsDisabled(true))
         .catch(() => setIsDisabled(false));
     }, 0);
@@ -42,7 +42,7 @@ function Form<T>({
   }, [form.getFieldsValue()]);
 
   return (
-    <AntdForm form={form} layout="vertical" {...restProps}>
+    <AntdForm form={form} layout="vertical" requiredMark={false} {...restProps}>
       {fields.map((field) => (
         <FormItem key={`form_${field.id}`} field={field} />
       ))}

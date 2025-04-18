@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form as AntdForm, Button, Modal, ModalProps } from "antd";
 
+import "./modal.css";
 import { Form } from "@/components";
 import { FormFieldsType } from "@/types/form";
 
@@ -34,6 +35,7 @@ function FormModal<T>({
           </Button>
         </>
       }
+      className="modal-content"
       {...restProp}
     >
       <Form

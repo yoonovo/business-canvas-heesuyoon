@@ -1,5 +1,6 @@
 import { Form, Input, DatePicker, Select, Checkbox } from "antd";
 
+import "./form.css";
 import { selectOpts } from "@/constants/recordFormFields";
 import { FormFieldsType } from "@/types/form";
 
@@ -8,7 +9,14 @@ function FormItem({ field }: { field: FormFieldsType }) {
 
   const commonProps = {
     name: id,
-    label,
+    label: required ? (
+      <>
+        {label}
+        <span className="required-mark">*</span>
+      </>
+    ) : (
+      label
+    ),
   };
 
   switch (type) {

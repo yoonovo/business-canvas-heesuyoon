@@ -11,7 +11,6 @@ import type { RecordType } from "@/types/record";
 
 import { storage } from "@/storage";
 
-const { Text } = Typography;
 const initRecordItem = {
   name: "",
   address: "",
@@ -110,9 +109,11 @@ const RecordList: React.FC = () => {
       <Flex
         justify="space-between"
         align="center"
-        style={{ height: 50, padding: "8px 14px" }}
+        style={{ height: 48, padding: "8px 14px" }}
       >
-        <Text style={{ fontSize: "16px", fontWeight: 600 }}>회원 목록</Text>
+        <Typography.Text style={{ fontSize: "16px", fontWeight: 600 }}>
+          회원 목록
+        </Typography.Text>
         <Button type="primary" icon={<PlusOutlined />} onClick={addRecord}>
           추가
         </Button>

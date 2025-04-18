@@ -1,6 +1,7 @@
 import { Key } from "react";
 import { Table, TableProps, MenuProps } from "antd";
 
+import "./table.css";
 import { DropdownMenuBtn } from "@/components";
 import { createColumns } from "@/utils/createColumn";
 import type { CommonColumnType } from "@/types/column";
@@ -28,7 +29,7 @@ function CommonTable<T extends RecordType>({
     ? {
         title: "",
         dataIndex: "buttons",
-        width: "5%",
+        width: "48px",
         render: (_: Key, record: T) => (
           <DropdownMenuBtn
             buttons={buttons}
@@ -41,6 +42,7 @@ function CommonTable<T extends RecordType>({
 
   return (
     <Table<T>
+      className="common-table"
       dataSource={dataSource}
       columns={[...createColumns(columns, dataSource), buttonsCol]}
       {...restProps}

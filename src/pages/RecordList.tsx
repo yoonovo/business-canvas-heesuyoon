@@ -45,6 +45,7 @@ const RecordList: React.FC = () => {
         rowSelection={{ type: "checkbox" }}
         dataSource={recordList}
         columns={recordColumns}
+        isButtons={true}
       />
     </div>
   );

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import { Button, Flex, Typography, Modal, ModalProps } from "antd";
 import { DeleteTwoTone, PlusOutlined } from "@ant-design/icons";
-import CommonTable from "../components/Table";
-import FormModal from "../components/FormModal";
+import { CommonTable, FormModal } from "../components";
 
 import { recordColumns } from "../constants/recordColumns";
 import { formFields } from "../constants/recordFormFields";

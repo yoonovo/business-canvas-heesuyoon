@@ -1,7 +1,7 @@
 import { Table } from "antd";
 import type { TableProps } from "antd";
-import { createColumns } from "../../utils/createColumn";
-import type { CommonColumnType } from "../../types/column";
+import { createColumns } from "../utils/createColumn";
+import type { CommonColumnType } from "../types/column";
 import type { MenuProps } from "antd";
 import DropdownMenuBtn from "./DropdownMenuBtn";
 import { Key } from "react";

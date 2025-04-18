@@ -1,9 +1,10 @@
-import React from "react";
-import { Button, Flex, Typography } from "antd";
+import React, { useState } from "react";
+import { Button, Flex, Typography, Modal, Divider, Form, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import CommonTable from "../components/common/Table";
+import CommonTable from "../components/Table";
 import { recordColumns } from "../constants/recordColumns";
 import type { RecordType } from "../types/record";
+import CommonModal from "../components/Modal";
 
 const { Text } = Typography;
 
@@ -28,9 +29,20 @@ const RecordList: React.FC = () => {
       isAgreeEmail: false,
     },
   ];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [form] = Form.useForm();
 
   const addRecord = () => {
-    console.log("test");
+    // Modal.confirm({
+    //   title: "회원 정보 추가",
+    //   content: (
+    //     <div>
+    //       <p>some messages...some messages...</p>
+    //       <p>some messages...some messages...</p>
+    //     </div>
+    //   ),
+    //   onOk() {},
+    // });
   };
 
   const editRecord = (v: RecordType) => {
@@ -41,6 +53,14 @@ const RecordList: React.FC = () => {
     console.log("deleteRecord", v);
   };
 
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <Flex
@@ -49,7 +69,7 @@ const RecordList: React.FC = () => {
         style={{ height: 50, padding: "8px 14px" }}
       >
         <Text style={{ fontSize: "16px", fontWeight: 600 }}>회원 목록</Text>
-        <Button type="primary" icon={<PlusOutlined />}>
+        <Button type="primary" icon={<PlusOutlined />} onClick={addRecord}>
           추가
         </Button>
       </Flex>
@@ -60,6 +80,12 @@ const RecordList: React.FC = () => {
         isButtons={true}
         onEdit={editRecord}
         onDelete={deleteRecord}
+      />
+      <CommonModal
+        title="회원 추가"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
       />
     </div>
   );

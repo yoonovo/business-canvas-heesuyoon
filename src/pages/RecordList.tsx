@@ -29,6 +29,18 @@ const RecordList: React.FC = () => {
     },
   ];
 
+  const addRecord = () => {
+    console.log("test");
+  };
+
+  const editRecord = (v: RecordType) => {
+    console.log("editRecord", v);
+  };
+
+  const deleteRecord = (v: RecordType) => {
+    console.log("deleteRecord", v);
+  };
+
   return (
     <div>
       <Flex
@@ -46,6 +58,8 @@ const RecordList: React.FC = () => {
         dataSource={recordList}
         columns={recordColumns}
         isButtons={true}
+        onEdit={editRecord}
+        onDelete={deleteRecord}
       />
     </div>
   );

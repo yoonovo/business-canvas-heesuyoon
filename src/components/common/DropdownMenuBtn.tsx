@@ -2,11 +2,19 @@ import { MoreOutlined } from "@ant-design/icons";
 import { Button, Dropdown } from "antd";
 import type { MenuProps } from "antd";
 
-function DropdownMenuBtn({ buttons }: { buttons: MenuProps["items"] }) {
+function DropdownMenuBtn({
+  buttons,
+  onEdit,
+  onDelete,
+}: {
+  buttons: MenuProps["items"];
+  onEdit: () => void;
+  onDelete: () => void;
+}) {
   const commonButtons: MenuProps["items"] = [
-    { label: "수정", key: "edit" },
+    { label: "수정", key: "edit", onClick: onEdit },
     { type: "divider" },
-    { label: "삭제", key: "delete", danger: true },
+    { label: "삭제", key: "delete", danger: true, onClick: onDelete },
   ];
 
   return (

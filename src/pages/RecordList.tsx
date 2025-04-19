@@ -88,24 +88,14 @@ const RecordList: React.FC = () => {
 
   return (
     <div>
-      <Flex
-        justify="space-between"
-        align="center"
-        style={{ height: 48, padding: "8px 14px" }}
-      >
-        <Typography.Text style={{ fontSize: "16px", fontWeight: 600 }}>
-          회원 목록
-        </Typography.Text>
-        <Button type="primary" icon={<PlusOutlined />} onClick={addRecord}>
-          추가
-        </Button>
-      </Flex>
       {/* Record Table */}
       <CommonTable<RecordType>
+        headerTitle="회원 목록"
         rowSelection={{ type: "checkbox" }}
         dataSource={records}
         columns={recordColumns}
         isButtons={true}
+        onAdd={addRecord}
         onEdit={editRecord}
         onDelete={deleteRecord}
       />

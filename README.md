@@ -79,7 +79,7 @@ npm run dev:storage
 - [x] 필드의 `type` 속성에 따라 다른 form을 구현 (`text`, `textarea`, `date`, `select`, `checkbox`)
 - [x] text type의 최대 글자수는 20자
 - [x] textarea type의 최대 글자수는 50자
-- [x] 회원 레코드에는 총 6개의 필드가 존재합니다.
+- [x] 회원 레코드에는 총 6개의 필드가 존재
 
 ```
 // type, label, required 순으로

@@ -30,7 +30,7 @@ const RecordList: React.FC = () => {
   // 회원 추가, 수정에 따라
   const handleModalOpts = (type: "add" | "edit", data?: RecordType) => {
     const isEdit = type === "edit";
-    setRecordItem(data ?? initRecordItem);
+    setRecordItem({ ...(data ?? initRecordItem) });
 
     setModalOpts({
       title: isEdit ? "회원 수정" : "회원 추가",

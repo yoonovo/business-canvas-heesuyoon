@@ -37,7 +37,14 @@ const RecordList: React.FC = () => {
       onSubmit: (v) => {
         setRecords((prev) =>
           isEdit
-            ? prev.map((val) => (val.key === v.key ? v : val))
+            ? prev.map((val) =>
+                val.key === v.key
+                  ? {
+                      ...v,
+                      registDate: dayjs(v.registDate).format("YYYY-MM-DD"),
+                    }
+                  : val
+              )
             : [
                 ...prev,
                 {

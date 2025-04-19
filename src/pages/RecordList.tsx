@@ -7,38 +7,9 @@ import { DeleteTwoTone, PlusOutlined } from "@ant-design/icons";
 import { CommonTable, FormModal } from "@/components";
 import { recordColumns } from "@/constants/recordColumns";
 import { formFields } from "@/constants/recordFormFields";
+import { initRecordItem, initRecords } from "@/constants/initValues";
 import type { RecordType } from "@/types/record";
-
 import { storage } from "@/storage";
-
-const initRecordItem = {
-  name: "",
-  address: "",
-  memo: "",
-  registDate: dayjs(new Date()).format("YYYY-MM-DD"),
-  job: "개발자",
-  isAgreeEmail: false,
-};
-const initRecords = [
-  {
-    key: 1,
-    name: "John Doe",
-    address: "서울 강남구",
-    memo: "외국인",
-    registDate: "2024-10-02",
-    job: "개발자",
-    isAgreeEmail: true,
-  },
-  {
-    key: 2,
-    name: "Foo Bar",
-    address: "서울 서초구",
-    memo: "한국인",
-    registDate: "2024-10-01",
-    job: "PO",
-    isAgreeEmail: false,
-  },
-];
 
 const RecordList: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -46,7 +17,7 @@ const RecordList: React.FC = () => {
     ModalProps & { onSubmit: (v: RecordType) => void }
   >();
   const [records, setRecords] = useState<RecordType[]>(
-    storage.get("records") ?? initRecords
+    () => storage.get("records") ?? initRecords
   );
   const [recordItem, setRecordItem] = useState<RecordType>(initRecordItem);
 
@@ -56,36 +27,40 @@ const RecordList: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  // 회원 추가
-  const addRecord = async () => {
+  // 회원 추가, 수정에 따라
+  const handleModalOpts = (type: "add" | "edit", data?: RecordType) => {
+    const isEdit = type === "edit";
+    setRecordItem(data ?? initRecordItem);
+
     setModalOpts({
-      title: "회원 추가",
+      title: isEdit ? "회원 수정" : "회원 추가",
       onSubmit: (v) => {
-        setRecords((prev) => [
-          ...prev,
-          {
-            ...v,
-            key: uuidv4(),
-            registDate: dayjs(v.registDate).format("YYYY-MM-DD"),
-          },
-        ]);
+        setRecords((prev) =>
+          isEdit
+            ? prev.map((val) => (val.key === v.key ? v : val))
+            : [
+                ...prev,
+                {
+                  ...v,
+                  key: uuidv4(),
+                  registDate: dayjs(v.registDate).format("YYYY-MM-DD"),
+                },
+              ]
+        );
         handleReset();
       },
     });
     setIsModalOpen(true);
   };
 
+  // 회원 추가
+  const addRecord = () => {
+    handleModalOpts("add");
+  };
+
   // 회원 수정
   const editRecord = (v: RecordType) => {
-    setRecordItem(v);
-    setModalOpts({
-      title: "회원 수정",
-      onSubmit: (v) => {
-        setRecords((prev) => prev.map((val) => (val.key == v.key ? v : val)));
-        handleReset();
-      },
-    });
-    setIsModalOpen(true);
+    handleModalOpts("edit", v);
   };
 
   // 회원 삭제

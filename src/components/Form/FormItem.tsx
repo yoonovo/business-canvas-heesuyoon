@@ -1,6 +1,6 @@
 import { Form, Input, DatePicker, Select, Checkbox } from "antd";
 
-import "./form.css";
+import { StyledRequiredMark } from "./form.styled";
 import { selectOpts } from "@/constants/recordFormFields";
 import { FormFieldsType } from "@/types/form";
 
@@ -12,7 +12,7 @@ function FormItem({ field }: { field: FormFieldsType }) {
     label: required ? (
       <>
         {label}
-        <span className="required-mark">*</span>
+        <StyledRequiredMark>*</StyledRequiredMark>
       </>
     ) : (
       label

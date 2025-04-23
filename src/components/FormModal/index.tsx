@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form as AntdForm, Button, Modal, ModalProps } from "antd";
 
-import "./modal.css";
+import { StyledModal } from "./modal.styled";
 import { Form } from "@/components";
 import { FormFieldsType } from "@/types/form";
 
@@ -21,7 +21,7 @@ function FormModal<T>({
   const [isDisabled, setIsDisabled] = useState(false);
 
   return (
-    <Modal
+    <StyledModal
       onCancel={onCancel}
       footer={
         <>
@@ -35,7 +35,6 @@ function FormModal<T>({
           </Button>
         </>
       }
-      className="modal-content"
       {...restProp}
     >
       <Form
@@ -44,7 +43,7 @@ function FormModal<T>({
         fieldsData={fieldsData}
         setIsDisabled={setIsDisabled}
       />
-    </Modal>
+    </StyledModal>
   );
 }
 

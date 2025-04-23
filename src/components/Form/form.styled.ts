@@ -1,0 +1,8 @@
+import styled from "styled-components";
+
+export const StyledRequiredMark = styled.span`
+  color: rgba(255, 77, 79, 1);
+  font-size: 16px;
+  font-weight: 400;
+  margin-left: 4px;
+`;

@@ -1,7 +1,7 @@
 import { Key } from "react";
-import { Table, TableProps, MenuProps } from "antd";
+import { TableProps, MenuProps, Table } from "antd";
 
-import "./table.css";
+import { StyledTableWrapper } from "./table.styled";
 import { DropdownMenuBtn, TableHeader } from "@/components";
 import { createColumns } from "@/utils/createColumn";
 import type { CommonColumnType } from "@/types/column";
@@ -45,13 +45,14 @@ function CommonTable<T extends RecordType>({
     : {};
 
   return (
-    <Table<T>
-      title={() => <TableHeader title={headerTitle} onAdd={onAdd} />}
-      className="common-table"
-      dataSource={dataSource}
-      columns={[...createColumns(columns, dataSource), buttonsCol]}
-      {...restProps}
-    />
+    <StyledTableWrapper>
+      <Table<T>
+        title={() => <TableHeader title={headerTitle} onAdd={onAdd} />}
+        dataSource={dataSource}
+        columns={[...createColumns(columns, dataSource), buttonsCol]}
+        {...restProps}
+      />
+    </StyledTableWrapper>
   );
 }
 

@@ -1,9 +1,9 @@
 import { FormFieldsType } from "@/types/form";
 
 export const formFields: FormFieldsType[] = [
-  { id: "name", type: "text", label: "이름", required: true },
+  { id: "name", type: "text", label: "이름", required: true, max: 20 },
   { id: "address", type: "text", label: "주소", required: false },
-  { id: "memo", type: "textarea", label: "메모", required: false },
+  { id: "memo", type: "textarea", label: "메모", required: false, max: 50 },
   { id: "registDate", type: "date", label: "가입일", required: true },
   { id: "job", type: "select", label: "직업", required: false },
   {

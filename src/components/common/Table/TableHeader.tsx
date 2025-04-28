@@ -1,5 +1,6 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Flex, Typography } from "antd";
+import { Button } from "antd";
+import { StyledTableHeader, StyledText } from "./table.styled";
 
 const TableHeader = ({
   title,
@@ -9,20 +10,14 @@ const TableHeader = ({
   onAdd: null | (() => void);
 }) => {
   return (
-    <Flex
-      justify="space-between"
-      align="center"
-      style={{ height: 48, padding: "8px 14px" }}
-    >
-      <Typography.Text style={{ fontSize: "16px", fontWeight: 600 }}>
-        {title}
-      </Typography.Text>
+    <StyledTableHeader>
+      <StyledText>{title}</StyledText>
       {onAdd && (
         <Button type="primary" icon={<PlusOutlined />} onClick={onAdd}>
           추가
         </Button>
       )}
-    </Flex>
+    </StyledTableHeader>
   );
 };
 

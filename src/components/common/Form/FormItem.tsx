@@ -13,14 +13,6 @@ type FormItemPropsType = {
 function FormItem({ field }: FormItemPropsType) {
   const [{ id, type, label, required }] = useState(field);
 
-  const commonProps = useMemo(
-    () => ({
-      name: id,
-      label: required ? <RequiredMark label={label} /> : label,
-    }),
-    [id, label, required]
-  );
-
   const getRules = ({ required, label, max }: FormFieldsType): Rule[] => [
     // 필수값 여부
     ...(required
@@ -29,6 +21,14 @@ function FormItem({ field }: FormItemPropsType) {
     // 최대 문자수
     ...(max ? [{ max, message: `글자수 ${max}을 초과할 수 없습니다.` }] : []),
   ];
+
+  const commonProps = useMemo(
+    () => ({
+      name: id,
+      label: required ? <RequiredMark label={label} /> : label,
+    }),
+    [id, label, required]
+  );
 
   const renderComponent = useMemo(() => {
     switch (type) {
@@ -71,7 +71,7 @@ function FormItem({ field }: FormItemPropsType) {
     }
   }, [field]);
 
-  return <>{renderComponent}</>;
+  return renderComponent;
 }
 
 export default FormItem;

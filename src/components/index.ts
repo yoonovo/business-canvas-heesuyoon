@@ -1,8 +1,8 @@
-import CommonTable from "@/components/Table";
-import TableHeader from "@/components/Table/TableHeader";
-import Form from "@/components/Form";
-import FormItem from "@/components/Form/FormItem";
-import FormModal from "@/components/FormModal";
-import DropdownMenuBtn from "@/components/DropdownMenuBtn";
+import CommonTable from "@/components/common/Table";
+import TableHeader from "@/components/common/Table/TableHeader";
+import Form from "@/components/common/Form";
+import FormItem from "@/components/common/Form/FormItem";
+import FormModal from "@/components/features/FormModal";
+import DropdownMenuBtn from "@/components/common/DropdownMenuBtn";
 
 export { CommonTable, TableHeader, Form, FormItem, FormModal, DropdownMenuBtn };

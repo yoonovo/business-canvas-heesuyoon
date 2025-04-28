@@ -1,23 +1,14 @@
+import { useMemo, useState } from "react";
 import { Form, Input, DatePicker, Select, Checkbox } from "antd";
 import type { Rule } from "antd/es/form";
 
-import { StyledRequiredMark } from "./form.styled";
+import RequiredMark from "./RequiredMark";
 import { selectOpts } from "@/constants/recordFormFields";
 import { FormFieldsType } from "@/types/form";
-import { useMemo, useState } from "react";
 
 type FormItemPropsType = {
   field: FormFieldsType;
 };
-
-function RequiredMark(label: string) {
-  return (
-    <>
-      {label}
-      <StyledRequiredMark>*</StyledRequiredMark>
-    </>
-  );
-}
 
 function FormItem({ field }: FormItemPropsType) {
   const [{ id, type, label, required }] = useState(field);
@@ -25,23 +16,18 @@ function FormItem({ field }: FormItemPropsType) {
   const commonProps = useMemo(
     () => ({
       name: id,
-      label: required ? RequiredMark(label) : label,
+      label: required ? <RequiredMark label={label} /> : label,
     }),
     [id, label, required]
   );
 
   const getRules = ({ required, label, max }: FormFieldsType): Rule[] => [
+    // 필수값 여부
     ...(required
       ? [{ required: true, message: `${label}은 필수입니다.` }]
       : []),
-    ...(max
-      ? [
-          {
-            max,
-            message: `글자수 ${max}을 초과할 수 없습니다.`,
-          },
-        ]
-      : []),
+    // 최대 문자수
+    ...(max ? [{ max, message: `글자수 ${max}을 초과할 수 없습니다.` }] : []),
   ];
 
   const renderComponent = useMemo(() => {

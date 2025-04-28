@@ -83,6 +83,10 @@ const RecordList: React.FC = () => {
   };
 
   useEffect(() => {
+    fetch("/api/user")
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+
     storage.set("records", records);
   }, [records]);
 

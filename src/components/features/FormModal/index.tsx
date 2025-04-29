@@ -1,9 +1,15 @@
 import { useState } from "react";
-import { Form as AntdForm, Button, Modal, ModalProps } from "antd";
+import { Form as AntdForm, Button, ModalProps } from "antd";
 
 import { StyledModal } from "./modal.styled";
 import { Form } from "@/components";
 import { FormFieldsType } from "@/types/form";
+
+type FormModalPropsType<T> = ModalProps & {
+  fields: FormFieldsType[];
+  fieldsData: T;
+  onSubmit: (v: T) => void;
+};
 
 function FormModal<T>({
   fields,
@@ -11,14 +17,14 @@ function FormModal<T>({
   onCancel,
   onSubmit,
   ...restProp
-}: ModalProps & {
-  fields: FormFieldsType[];
-  fieldsData: T;
-  onSubmit: (v: T) => void;
-}) {
+}: FormModalPropsType<T>) {
   const [form] = AntdForm.useForm();
   const values = AntdForm.useWatch([], form);
   const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleSave = () => {
+    onSubmit({ ...fieldsData, ...values });
+  };
 
   return (
     <StyledModal
@@ -26,11 +32,7 @@ function FormModal<T>({
       footer={
         <>
           <Button onClick={onCancel}>취소</Button>
-          <Button
-            type="primary"
-            disabled={!isDisabled}
-            onClick={() => onSubmit({ ...fieldsData, ...values })}
-          >
+          <Button type="primary" disabled={!isDisabled} onClick={handleSave}>
             저장
           </Button>
         </>

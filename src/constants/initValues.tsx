@@ -1,10 +1,10 @@
-import dayjs from "dayjs";
+import { formatDate } from "@/utils/date";
 
 export const initRecordItem = {
   name: "",
   address: "",
   memo: "",
-  registDate: dayjs(new Date()).format("YYYY-MM-DD"),
+  registDate: formatDate(new Date()),
   job: "개발자",
   isAgreeEmail: false,
 };

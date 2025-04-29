@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { Form as AntdForm, FormInstance } from "antd";
-import dayjs from "dayjs";
 
 import { FormItem } from "@/components";
 import { FormFieldsType } from "@/types/form";
+import { parseDate } from "@/utils/date";
 
 type FormPropsType<T> = {
   form: FormInstance;
@@ -26,7 +26,7 @@ function Form<T>({
 
     form.setFieldsValue({
       ...fieldsData,
-      [dateFieldId]: dayjs(String(fieldsData[dateFieldId])),
+      [dateFieldId]: parseDate(String(fieldsData[dateFieldId])),
     });
   }, [fieldsData]);
 

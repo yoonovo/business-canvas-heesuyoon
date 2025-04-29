@@ -3,7 +3,7 @@ import type { ColumnFilterItem } from "antd/es/table/interface";
 import { CommonColumnType } from "@/types/column";
 import { Key } from "react";
 
-type valueType = Key | boolean;
+type ValueType = Key | boolean;
 
 export function createColumns<T extends AntdColumnType>(
   columns: CommonColumnType<T>[],
@@ -18,7 +18,7 @@ export function createColumns<T extends AntdColumnType>(
             (tot: ColumnFilterItem[], v) => {
               tot.push({
                 text: String(v),
-                value: v as valueType,
+                value: v as ValueType,
               });
               return tot;
             },
@@ -27,7 +27,7 @@ export function createColumns<T extends AntdColumnType>(
         : [];
 
       // 필터링 형식에 따라 동작
-      const onFilter = (v: valueType, record: T) => {
+      const onFilter = (v: ValueType, record: T) => {
         const fieldValue = String(record[dataIndex]);
 
         switch (filterMatchType) {

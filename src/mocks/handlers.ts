@@ -1,7 +1,8 @@
 import { http, HttpResponse } from "msw";
+import data from "./data.json";
 
 export const handlers = [
-  http.get("/api/user", () => {
-    return HttpResponse.json({ id: 1, name: "Heesu" });
+  http.get("/records", () => {
+    return HttpResponse.json(data);
   }),
 ];

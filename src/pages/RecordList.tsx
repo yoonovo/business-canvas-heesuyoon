@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import dayjs from "dayjs";
 import { v4 as uuidv4 } from "uuid";
 import { Modal, ModalProps } from "antd";
 import { DeleteTwoTone } from "@ant-design/icons";
@@ -9,6 +8,7 @@ import { recordColumns } from "@/constants/recordColumns";
 import { formFields } from "@/constants/recordFormFields";
 import { initRecordItem, initRecords } from "@/constants/initValues";
 import type { RecordType } from "@/types/record";
+import { formatDate } from "@/utils/date";
 import { storage } from "@/storage";
 
 const RecordList: React.FC = () => {
@@ -32,46 +32,48 @@ const RecordList: React.FC = () => {
     const isEdit = type === "edit";
     setRecordItem({ ...(data ?? initRecordItem) });
 
+    const onSubmit = (v: RecordType) => {
+      setRecords((prev) =>
+        isEdit
+          ? prev.map((val) =>
+              val.key === v.key
+                ? {
+                    ...v,
+                    registDate: formatDate(v.registDate),
+                  }
+                : val
+            )
+          : [
+              ...prev,
+              {
+                ...v,
+                key: uuidv4(),
+                registDate: formatDate(v.registDate),
+              },
+            ]
+      );
+      handleReset();
+    };
+
     setModalOpts({
       title: isEdit ? "회원 수정" : "회원 추가",
-      onSubmit: (v) => {
-        setRecords((prev) =>
-          isEdit
-            ? prev.map((val) =>
-                val.key === v.key
-                  ? {
-                      ...v,
-                      registDate: dayjs(v.registDate).format("YYYY-MM-DD"),
-                    }
-                  : val
-              )
-            : [
-                ...prev,
-                {
-                  ...v,
-                  key: uuidv4(),
-                  registDate: dayjs(v.registDate).format("YYYY-MM-DD"),
-                },
-              ]
-        );
-        handleReset();
-      },
+      onSubmit,
     });
     setIsModalOpen(true);
   };
 
   // 회원 추가
-  const addRecord = () => {
+  const handleAddRecord = () => {
     handleModalOpts("add");
   };
 
   // 회원 수정
-  const editRecord = (v: RecordType) => {
+  const handleEditRecord = (v: RecordType) => {
     handleModalOpts("edit", v);
   };
 
   // 회원 삭제
-  const deleteRecord = (v: RecordType) => {
+  const handleDeleteRecord = (v: RecordType) => {
     Modal.confirm({
       title: "회원 삭제",
       icon: <DeleteTwoTone />,
@@ -83,12 +85,14 @@ const RecordList: React.FC = () => {
   };
 
   useEffect(() => {
-    fetch("/api/user")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-
     storage.set("records", records);
   }, [records]);
+
+  useEffect(() => {
+    fetch("records")
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }, []);
 
   return (
     <div>
@@ -99,9 +103,9 @@ const RecordList: React.FC = () => {
         dataSource={records}
         columns={recordColumns}
         isButtons={true}
-        onAdd={addRecord}
-        onEdit={editRecord}
-        onDelete={deleteRecord}
+        onAdd={handleAddRecord}
+        onEdit={handleEditRecord}
+        onDelete={handleDeleteRecord}
       />
       {/* Record Modal */}
       <FormModal<RecordType>

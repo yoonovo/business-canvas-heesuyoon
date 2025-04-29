@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal, ModalProps } from "antd";
 import { DeleteTwoTone } from "@ant-design/icons";
 
@@ -59,12 +59,6 @@ const RecordList: React.FC = () => {
       onOk: () => key && deleteRow(key),
     });
   };
-
-  useEffect(() => {
-    // fetch("records")
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data));
-  }, []);
 
   return (
     <div>

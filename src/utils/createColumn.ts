@@ -14,16 +14,15 @@ export function createColumns<T extends AntdColumnType>(
       // 필터 목록 추출
       const filters: ColumnFilterItem[] = isFilter
         ? filterList ??
-          [...new Set(dataSource.map((data) => data[dataIndex]))].reduce(
-            (tot: ColumnFilterItem[], v) => {
+          [...new Set(dataSource.map((data) => data[dataIndex]))]
+            .filter(Boolean)
+            .reduce((tot: ColumnFilterItem[], v) => {
               tot.push({
                 text: String(v),
                 value: v as ValueType,
               });
               return tot;
-            },
-            []
-          )
+            }, [])
         : [];
 
       // 필터링 형식에 따라 동작

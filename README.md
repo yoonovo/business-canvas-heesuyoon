@@ -1,9 +1,17 @@
-# 프론트엔드 개발자 윤희수
+# Table Craft
 
 ## 📘 프로젝트 소개
 
 이 프로젝트는 React, Typescript, Ant Design을 기반으로 하는 웹 애플리케이션입니다.
 기본적으로 회원 목록의 추가, 수정, 삭제 등 기능을 제공하고 localStorage 모드 지원을 통해 스토리지 방식도 유연하게 설정 가능합니다.
+
+## 🎯 개발 포인트
+
+- zustand를 통한 클라이언트 상태 관리 (store 패턴 적용)
+- localStorage를 통한 간단한 데이터베이스 시뮬레이션
+- 폴더 구조 명확화: components/, stores/, pages/, types/, utils/로 기능별 분리
+- 아토믹 디자인 패턴 기반 컴포넌트 설계: - components/common/ : 버튼, 인풋 등 공통적으로 사용하는 기본 UI 컴포넌트 - components/features/ : 특정 도메인(Record 등)에 종속된 기능 컴포넌트
+- 타입 안전성(TypeScript)을 바탕으로 코드 안정성 확보
 
 ## 🛠️ 주요 기술 스택
 
@@ -16,6 +24,8 @@
 - Antd v5.24 (https://ant.design/components/overview/)
 - Dayjs v1.11
 - Uuid v.11.1
+- Zustand v5
+- MSW v2.7
 
 ## 📁 프로젝트 구조
 
@@ -23,8 +33,10 @@
 src/
 ├── assets/             # 이미지 혹은 font 파일
 ├── components/         # 재사용 가능한 공통 컴포넌트
+├── constants/          # 초기값 및 상수 정의
+├── mocks/              # msw 핸들러, 가짜 API 서버 설정 파일 (개발예정)
 ├── pages/              # 주요 페이지 컴포넌트
-├── storage/            # 로컬 스토리지 및 상태 관리
+├── stores/             # 로컬 스토리지 및 상태 관리
 ├── types/              # TypeScript 타입 정의
 ├── utils/              # 유틸리티 함수 정의
 ├── App.tsx             # 앱 엔트리
@@ -77,19 +89,6 @@ npm run dev:storage
 ### 필드
 
 - [x] 필드의 `type` 속성에 따라 다른 form을 구현 (`text`, `textarea`, `date`, `select`, `checkbox`)
-- [x] text type의 최대 글자수는 20자
-- [x] textarea type의 최대 글자수는 50자
-- [x] 회원 레코드에는 총 6개의 필드가 존재
-
-```
-// type, label, required 순으로
-text, ‘이름‘, true
-text, ‘주소‘, false
-textarea, ‘메모‘, false
-date, ‘가입일‘, true
-select, ‘직업‘, false
-checkbox, ‘이메일 수신 동의’, false
-```
 
 ### 레코드
 
@@ -103,6 +102,6 @@ checkbox, ‘이메일 수신 동의’, false
 
 ## 저장 기능
 
-- [x] 개발 서버를 실행 시 env로 STORAGE를 `in-memory` 또는 `local-storage`로 설정
+- [x] 개발 서버를 실행 시 env로 STORAGE를 `none` 또는 `local-storage`로 설정
 - [x] `local-storage`로 설정 시 레코드들을 로컬 스토리지에 저장
       (개발 서버를 재실행하거나 브라우저를 새로고침 해도 데이터가 보존됨)

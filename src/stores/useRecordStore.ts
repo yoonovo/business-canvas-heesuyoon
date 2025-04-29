@@ -6,7 +6,7 @@ import { RecordStoreType } from "@/types/record";
 import { formatDate } from "@/utils/date";
 import { initRecords } from "@/constants/initValues";
 
-const storageType: "local-storage" | "in-memory" = import.meta.env.VITE_STORAGE;
+const storageType: "local-storage" | "none" = import.meta.env.VITE_STORAGE;
 
 const config: StateCreator<RecordStoreType, [], []> = (set) => ({
   list: [...initRecords],

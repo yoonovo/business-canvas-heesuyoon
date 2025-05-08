@@ -25,7 +25,6 @@
 - Dayjs v1.11
 - Uuid v.11.1
 - Zustand v5
-- MSW v2.7
 
 ## 📁 프로젝트 구조
 
@@ -49,7 +48,6 @@ src/
 
 ```
 git clone https://github.com/yoonovo/business-canvas-heesuyoon.git
-cd business-canvas-heesuyoon
 ```
 
 ### 2. 패키지 설치
